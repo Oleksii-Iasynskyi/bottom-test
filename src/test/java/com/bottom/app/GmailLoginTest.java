@@ -33,16 +33,20 @@ public class GmailLoginTest {
 
     @Test
     public void testName() throws Exception {
+        //this block may be moved into separate Feature section
         loginPage.getLoginField().setValue(gmailUsername);
         loginPage.getNextButton().click();
         loginPage.getPassField().setValue(gmailPassword);
         loginPage.getSignButton().click();
 
+        //waiting until inbox page is loaded
         waitUntilPagesIsLoaded(inboxPage.getLoggedByEmail(gmailUsername));
 
+        //verifying that login is performed with correct email
         inboxPage.getLoggedByEmail(gmailUsername).shouldBe(Condition.present);
     }
 
+    // may be moved to general utils section, or to the Base page module
     protected void waitUntilPagesIsLoaded(SelenideElement elementForWaiting) {
         elementForWaiting.waitUntil(Condition.appears, 20000);
     }
